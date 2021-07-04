@@ -72,15 +72,9 @@
 
 <link rel='stylesheet" href="{{ asset("/be-assets/js/bootstrap-datetimepicker.min.css") }}' />
 
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
 
-
-
 <script src='{{ asset("/be-assets/js/bootstrap-datetimepicker.min.js") }}'></script>
-
-
 
 <script type="text/javascript">
     $(function() {

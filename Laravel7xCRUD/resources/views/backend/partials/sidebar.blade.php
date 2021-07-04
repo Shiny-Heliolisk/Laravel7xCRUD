@@ -48,6 +48,13 @@
 
    </li>
 
+   <li class="nav-item active">
+
+<a class="nav-link" href="{{ url('/backend/category/index') }}">
+
+    <span>Danh mục</span></a>
+
+</li>
 
 
 

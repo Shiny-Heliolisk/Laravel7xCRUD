@@ -3,6 +3,43 @@
 
 @section('content')
 <h1>Danh sách sản phẩm</h1>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #4e73df">
+
+    <form name="search_product" method="get" action='{{ htmlspecialchars($_SERVER["REQUEST_URI"]) }}' class="form-inline">
+
+        <input name="product_name" value="{{$searchKeyWord}}" class="form-control" style="width: 350px; margin-right: 20px" placeholder="Nhập tên sản phẩm bạn muốn tìm kiếm ..." autocomplete="off">
+
+        <select name="product_sort" class="form-control" style="width: 150px; margin-right: 20px">
+
+            <option value="">Sắp xếp</option>
+
+            <option value="price_asc" {{ $sort == "price_asc" ? " selected" : "" }}>Giá tăng dần</option>
+
+            <option value="price_desc" {{ $sort == "price_desc" ? " selected" : "" }}>Giá giảm dần</option>
+
+            <option value="quantity_asc" {{ $sort == "quantity_asc" ? " selected" : "" }}>Tồn kho tăng dần</option>
+
+            <option value="quantity_desc" {{ $sort == "quantity_desc" ? " selected" : "" }}>Tồn kho giảm dần</option>
+
+        </select>
+        <div style="padding: 10px 0">
+
+            <input type="submit" name="search" class="btn btn-success" value="Lọc kết quả">
+
+        </div>
+        <div style="padding: 10px 0">
+
+            <a href="#" id="clear-search" class="btn btn-warning">clear-filter</a>
+
+        </div>
+        <input type="hidden" name="page" value="1">
+
+    </form>
+
+</div>
+
+{{$products->links()}}
+
 @if(session('status'))
 <div class="alert alert-success">
     {{session('status')}}
@@ -32,7 +69,7 @@
             <th>hành động</th>
         </tr>
     </tfoot>
-
+    
     <tbody>
         @if(isset($products) && !empty($products))
 
@@ -71,6 +108,50 @@
     </tbody>
 </table>
 
-    {{$products->links()}}
+{{$products->links()}}
+
+@endsection
+@section('appendjs')
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#clear-search").on("click", function(e) {
+
+            e.preventDefault();
+
+            $("input[name='product_name']").val('');
+
+            $("select[name='product_status']").val('');
+
+            $("select[name='product_sort']").val('');
+
+            $("form[name='search_category']").trigger("submit");
+        });
+
+        $("a.page-link").on("click", function(e) {
+            e.preventDefault();
+            var rel = $(this).attr("rel");
+            if (rel == "next") {
+                var page = $("body").find(".page-item.active > .page-link").eq(0).text();
+                console.log(" : " + page);
+                page = parseInt(page);
+                page += 1;
+            } else if (rel == "prev") {
+                var page = $("body").find(".page-item.active > .page-link").eq(0).text();
+                console.log(page);
+                page = parseInt(page);
+                page -= 1;
+            } else {
+                var page = $(this).text();
+            }
+            console.log(page);
+            page = parseInt(page);
+            $("input[name='page']").val(page);
+            $("form[name='search_product']").trigger("submit");
+
+        });
+    });
+</script>
 
 @endsection

@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('/','Backend\DashboardController@index');
 
 Route::get('/backend/products/index','Backend\ProductsController@index');
@@ -27,4 +24,9 @@ Route::post('backend/product/store','Backend\ProductsController@store');
 
 Route::post('backend/products/update/{id}','Backend\ProductsController@update');
 
-Route::post('backend/products/destroy/{id}',"Backend\ProductsController@destroy");
+Route::post('backend/products/destroy/{id}',"Backend\ProductsController@destroy");  
+
+//category
+Route::get('/backend/category/index','Backend\CategController@cIndex');
+Route::get('/backend/category/create','Backend\CategController@cCreate');
+Route::post('/backend/category/store','Backend\CategController@cStore');
